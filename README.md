@@ -11,9 +11,9 @@ import glob
 from selenium.webdriver.common.keys import Keys
 from urllib.error import HTTPError
 
-logoforerror = 'https://www.ddi.ro/image/cache/data/logo/ddi-logo-300x235.jpg'
+logoforerror = 'https://www.zxc.cx/logo-300x235.jpg'
 
-# links_list = pd.read_excel(r"C:\Users\Panda\PycharmProjects\catalogddi\links.xlsx", sheet_name="Sheet1")
+# links_list = pd.read_excel(r"C:\links.xlsx", sheet_name="Sheet1")
 # print(links_list)
 
 links_list = [
