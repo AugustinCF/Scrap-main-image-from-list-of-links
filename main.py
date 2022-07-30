@@ -1,53 +1,70 @@
-# Scrap-main-image-from-list-of-links
-This script in written in python using selenium, scrape links and download in order brand "(1), brand (2)" also ignore  some errors 
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-import os
+from selenium.webdriver.chrome.options import Options
+from fake_useragent import UserAgent
 import time
 import urllib.request
 import wget
-import pandas as pd
-import glob
-from selenium.webdriver.common.keys import Keys
 from urllib.error import HTTPError
 
-logoforerror = 'https://www.zxc.cx/logo-300x235.jpg'
+options = Options()
+ua = UserAgent()
+userAgent = ua.random
+print(userAgent)
+options.add_argument(f'user-agent={userAgent}')
 
-# links_list = pd.read_excel(r"C:\links.xlsx", sheet_name="Sheet1")
-# print(links_list)
+logoddi = 'https://xyz.foo/sd-logo-300x235.jpg'
 
 links_list = [
+ #here links
+]
 
-    "https://www.google.com/img/cxz, https://www.google.com/img/zxc]
+
 
 for link in links_list:
     driver = webdriver.Chrome('C:\webdriver\chromedriver.exe')
+    #driver = webdriver.Firefox('C:\webdriver\geckodriver.exe')
+
+
     driver.implicitly_wait(15)
     print(link)
     driver.get(link)
 
-    imgsrc = driver.find_elements_by_xpath('//*[@id="image"]')
-    print(imgsrc)
-    
-    #used for to resolve attribute error
+    imgsrc = driver.find_elements_by_xpath('//*[@id="product"]/ul[1]/li[2]/a/img')
+    #print(imgsrc)
+    time.sleep(3)
+    def imaginea():
+        print()
+
     for img in imgsrc:
         imaginea = img.get_attribute('src')
 
     try:
-        prindeimaginea = wget.download(imaginea, out="catalog.png")
+        prindeimaginea = wget.download(imaginea, out="brand.jpg")
 
 
-    except HTTPError:
-        print("problma la imagine HTTPEror")
-        wget.download(logoforerror, out="imgdown.png")
+    except urllib.error.HTTPError as e:
+        print (e,"HTTPhorror")
+        HTTPhorror = wget.download(logoddi, out="brand.jpg")
+        print("Fisier salvat Rev",HTTPhorror)
+        continue
+    except urllib.error.URLError as e:
+        print(e,"UrlHorror")
+        UrlHorror = wget.download(logoddi, out="brand.jpg")
+        print("Fisier salvat Rev",UrlHorror)
+        continue
+    except AttributeError as e:
+        print(e,"AttHorror Pagina nu exista")
+        AttHorror = wget.download(logoddi, out="brand.jpg")
+        print("Fisier salvat Rev",AttHorror)
         continue
 
-    print('Saved file: ', prindeimaginea)
-    
-    #if you want you urllib
-    # urllib.request.urlretrieve(imgsrc, "C:\webdriver\imagscrap.jpg")
+    # imgbrandget = wget.download(imgbrand, out="brand.jpg")
 
-    time.sleep(3)  
+    print('Fisier salvat: ', prindeimaginea)
+
+    # urllib.request.urlretrieve(imgsrc, "C:\webdriver\imaginescrap.jpg")
+
+    time.sleep(3)  # required for my usage
 
     driver.close()
 
